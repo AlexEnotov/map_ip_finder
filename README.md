@@ -24,7 +24,7 @@ A modern Python application that visualizes geographical locations of multiple I
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/AlexEnotov/map_ip_finder.git
+git clone https://github.com/AlexEnotov/IP-Location-Finder.git
 cd ip-location-finder
 ```
 
