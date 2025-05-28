@@ -2,7 +2,7 @@
 
 A modern Python application that visualizes geographical locations of multiple IP addresses on an interactive map with clustering support.
 
-![IP Location Finder](screenshot.png)
+![image](https://github.com/user-attachments/assets/21742c5c-f2ff-4737-994f-2ca4536108e6)
 
 ## Features
 
@@ -24,7 +24,7 @@ A modern Python application that visualizes geographical locations of multiple I
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ip-location-finder.git
+git clone https://github.com/AlexEnotov/map_ip_finder.git
 cd ip-location-finder
 ```
 
