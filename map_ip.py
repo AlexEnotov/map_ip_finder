@@ -183,83 +183,107 @@ class ModernIPFinder(ctk.CTk):
         self.grid_rowconfigure(2, weight=1)
 
         # Header frame
-        self.header_frame = ctk.CTkFrame(self)
-        self.header_frame.grid(row=0, column=0, sticky="ew", padx=20, pady=(20,10))
+        self.header_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.header_frame.grid(row=0, column=0, sticky="ew", padx=10, pady=(10,5))
         self.header_frame.grid_columnconfigure(1, weight=1)
 
         # Title
         self.title_label = ctk.CTkLabel(
             self.header_frame,
             text="IP Location Finder",
-            font=ctk.CTkFont(size=24, weight="bold")
+            font=ctk.CTkFont(size=20, weight="normal")
         )
-        self.title_label.grid(row=0, column=1, padx=20, pady=10)
+        self.title_label.grid(row=0, column=1, padx=10, pady=5, sticky="w")
 
-        # Theme switcher
+        # Theme switcher (moved to header frame right side)
         self.theme_switch = ctk.CTkSwitch(
             self.header_frame,
             text="Dark Mode",
             command=self.toggle_theme,
             onvalue="dark",
-            offvalue="light"
+            offvalue="light",
+            width=50,
+            height=20,
+            fg_color="gray20",
+            progress_color="blue",
+            button_color="gray40",
+            button_hover_color="gray50",
+            text_color="gray70",
+            font=ctk.CTkFont(size=10)
         )
-        self.theme_switch.grid(row=0, column=2, padx=20, pady=10)
+        self.theme_switch.grid(row=0, column=2, padx=10, pady=5, sticky="e")
         self.theme_switch.select()
 
         # Search frame
-        self.search_frame = ctk.CTkFrame(self)
-        self.search_frame.grid(row=1, column=0, sticky="ew", padx=20, pady=10)
+        self.search_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.search_frame.grid(row=1, column=0, sticky="ew", padx=10, pady=5)
         self.search_frame.grid_columnconfigure(1, weight=1)
 
         # IP Entry Label
         self.ip_label = ctk.CTkLabel(
             self.search_frame,
             text="Enter IP addresses:",
-            font=ctk.CTkFont(size=12)
+            font=ctk.CTkFont(size=12, weight="normal")
         )
-        self.ip_label.grid(row=0, column=0, padx=10, pady=10)
+        self.ip_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
-        # IP Entry
+        # IP Entry (multi-line textbox for multiple IPs)
         self.ip_entry = ctk.CTkTextbox(
             self.search_frame,
-            height=60,
             width=400,
-            font=ctk.CTkFont(size=12)
+            height=60,
+            font=ctk.CTkFont(size=12),
+            fg_color="#2a2a2a",
+            corner_radius=5,
+            border_width=1,
+            border_color="#444444",
+            text_color="white"
         )
-        self.ip_entry.grid(row=0, column=1, padx=10, pady=10)
-        self.ip_entry.insert("1.0", "Enter multiple IP addresses (one per line)")
+        self.ip_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+        # No placeholder text inside textbox; label is above
 
         # Buttons frame
         self.buttons_frame = ctk.CTkFrame(self.search_frame, fg_color="transparent")
-        self.buttons_frame.grid(row=0, column=2, padx=10, pady=10)
+        self.buttons_frame.grid(row=0, column=2, padx=5, pady=5)
 
         # Paste button
         self.paste_button = ctk.CTkButton(
             self.buttons_frame,
             text="Paste IPs",
             command=self.paste_ips,
-            fg_color="gray30",
-            hover_color="gray40"
+            fg_color="#444444",
+            hover_color="#555555",
+            corner_radius=5,
+            border_width=0,
+            font=ctk.CTkFont(size=11)
         )
-        self.paste_button.grid(row=0, column=0, padx=5, pady=5)
+        self.paste_button.grid(row=0, column=0, padx=3, pady=3)
 
         # Search button
         self.search_button = ctk.CTkButton(
             self.buttons_frame,
             text="Find Locations",
-            command=self.get_locations
+            command=self.get_locations,
+            fg_color="#007acc",
+            hover_color="#005f99",
+            corner_radius=5,
+            border_width=0,
+            font=ctk.CTkFont(size=11)
         )
-        self.search_button.grid(row=1, column=0, padx=5, pady=5)
+        self.search_button.grid(row=1, column=0, padx=3, pady=3)
 
         # Clear button
         self.clear_button = ctk.CTkButton(
             self.buttons_frame,
             text="Clear All",
             command=self.clear_all,
-            fg_color="gray30",
-            hover_color="gray40"
+            fg_color="#444444",
+            hover_color="#555555",
+            corner_radius=5,
+            border_width=0,
+            font=ctk.CTkFont(size=11)
         )
-        self.clear_button.grid(row=2, column=0, padx=5, pady=5)
+        self.clear_button.grid(row=2, column=0, padx=3, pady=3)
 
         # Results frame
         self.results_frame = ctk.CTkFrame(self)
@@ -328,7 +352,9 @@ class ModernIPFinder(ctk.CTk):
         self.after(100, self.marker_cluster.update_clusters)
 
     def clear_placeholder(self, event):
-        if self.ip_entry.get("1.0", tk.END).strip() == "Enter multiple IP addresses (one per line)":
+        # Clear placeholder text if present
+        current_text = self.ip_entry.get("1.0", tk.END).strip()
+        if current_text == "Enter multiple IP addresses (one per line)":
             self.ip_entry.delete("1.0", tk.END)
 
     def toggle_theme(self):
